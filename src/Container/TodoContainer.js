@@ -9,11 +9,11 @@ class TodoContainer extends React.Component {
             // Basic state created 
             todoName: '',
             todoList: [],
-            checked: true,
         }
         // Binding the constructor
         this.handleOnTodoName = this.handleOnTodoName.bind(this);
         this.handleAddTodo = this.handleAddTodo.bind(this);
+        this.handleCheck = this.handleCheck.bind(this);
     }
 
     handleOnTodoName(e) {
@@ -32,7 +32,16 @@ class TodoContainer extends React.Component {
             isCompleted: false
         })
         this.setState({
-            todoList:refTodoList
+            todoList:refTodoList,
+            todoName:''
+        })
+    }
+
+    handleCheck (index) {
+        let refList = this.state.todoList;
+        refList[index].isCompleted = true
+        this.setState({
+            todoList: refList
         })
     }
 
@@ -40,6 +49,7 @@ class TodoContainer extends React.Component {
         const { todoName, todoList } = this.state;
         console.log(this.state,"RENDER_COMPLETE"); // USING THIS YOU CAN SEE THE LIVE CHANGES DONE ON STATE 
         // Need to open Chrome UI Developer mode and see the changes on handle
+        // But make sure when you make PR its should not be included
         
         return (
             <div>
@@ -48,7 +58,7 @@ class TodoContainer extends React.Component {
                     handleAddTodo={this.handleAddTodo}
                     handleOnTodoName={this.handleOnTodoName}
                 />
-                <TodoList todoList={todoList} />
+                <TodoList todoList={todoList} handleCheck={this.handleCheck} />
             </div>
         )
     }
